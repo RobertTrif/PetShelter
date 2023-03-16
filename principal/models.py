@@ -14,6 +14,7 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=256)
 
 class Animal(models.Model):
+    nombre = models.CharField(max_length=256)
     peso = models.IntegerField()
     color = models.CharField(max_length=256)
 
@@ -21,7 +22,7 @@ class Adopcion(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, )
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
-    fecha = models.DateField()
+    fecha = models.DateField(auto_now_add=True)
 
 class Gato(Animal):
     raza = models.CharField(max_length=256)
