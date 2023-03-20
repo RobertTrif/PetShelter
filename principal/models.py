@@ -17,10 +17,11 @@ class Animal(models.Model):
     nombre = models.CharField(max_length=256)
     peso = models.IntegerField()
     color = models.CharField(max_length=256)
+    adoptado = models.BooleanField()
 
 class Adopcion(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, )
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
     fecha = models.DateField(auto_now_add=True)
 
