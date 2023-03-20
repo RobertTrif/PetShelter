@@ -27,3 +27,4 @@ def animal(request, animal_id):
     animal = Animal.objects.get(pk=animal_id)
     return render(request, "animal.html", {'animal': animal})
 
+hoasldjasldjlkasjdlksjdlkjslkdjlskjlkjlkjc
