@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{ animal.nombre}}</title>
 </head>
 <body>
     <p>
-        {{ animal.nombre}}
-        {{ animal.peso }}
-        {{ animal.color }}
+        <strong>Nombre:</strong> {{ animal.nombre}} <br>
+        <strong>Peso (Kg):</strong> {{ animal.peso }} <br>
+        <strong>Color:</strong> {{ animal.color }} <br>
+        <strong>Raza:</strong> {{animal.raza}} <br>
+        <strong>Pelaje:</strong> {{animal.pelaje}}
     </p>
 </body>
 </html>
