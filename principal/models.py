@@ -12,8 +12,8 @@ class Centro(models.Model):
 
 class Trabajador(models.Model):
     User = models.OneToOneField(WebUser, on_delete=models.CASCADE, primary_key=True)
-    nombre = models.CharField(max_length=256)
-    apellidos = models.CharField(max_length=256)
+    nombre = models.CharField(max_length=40,blank=False,null=False)
+    apellidos = models.CharField(max_length=40,blank=False,null=False)
     departamento = models.CharField(max_length=256)
     adresa = models.CharField(max_length=256)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
@@ -21,7 +21,7 @@ class Trabajador(models.Model):
 class Cliente(models.Model):
     User = models.OneToOneField(WebUser, on_delete=models.CASCADE, primary_key=True)
     nombre = models.CharField(max_length=40,blank=False,null=False)
-    apellidos = models.CharField(max_length=256)
+    apellidos = models.CharField(max_length=40,blank=False,null=False)
     telefono = models.DecimalField(max_digits=9, decimal_places=0, blank=False,null=False)
     email = models.EmailField(blank=False,null=False)
     anos = models.DecimalField(max_digits=3, decimal_places=0, blank=False,null=False)

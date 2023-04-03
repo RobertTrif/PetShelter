@@ -25,4 +25,5 @@ urlpatterns = [
     path ('lista_animales/', wv.lista_animales, name='Lista_animales'),
     path ('centros/', wv.centros, name='Centros'),
     path ('centro/<int:centro_id>', wv.centro, name='Centro'),
+    path ('registro_cliente/', wv.SignupVisitorView.as_view(), name='Registro_cliente'),
 ]
