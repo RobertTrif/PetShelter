@@ -39,13 +39,27 @@ def centro(request, centro_id):
     centro = Centro.objects.get(pk=centro_id)
     return render(request, "centro.html", {'centro':centro} )
 
-class SignupVisitorView(CreateView):
+class RegistroClienteView(CreateView):
     model = WebUser
     form_class = RegistroNuevoCliente
     template_name = 'registro_cliente.html'
 
     def get_context_data(self, **kwargs):
         kwargs['user_type'] = 'cliente'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        web_user = form.save()
+        login(self.request, web_user)
+        return redirect('Index')
+    
+class RegistroTrabajadorView(CreateView):
+    model = WebUser
+    form_class = RegistroNuevoTrabajador
+    template_name = 'registro_trabajador.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'trabajador'
         return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
