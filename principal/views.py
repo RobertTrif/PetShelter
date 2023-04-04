@@ -12,9 +12,14 @@ def index(request):
 # print information of specific animal
 def animal(request, animal_id):
     animal = Animal.objects.get(pk=animal_id)
+    if (Perro.objects.filter(pk=animal_id).exists()):
+        tipo = Perro.objects.get(pk=animal_id)
+    elif (Gato.objects.filter(pk=animal_id).exists()):
+        tipo = Gato.objects.get(pk=animal_id)
+    elif (Otro.objects.filter(pk=animal_id).exists()):
+        tipo = Otro.objects.get(pk=animal_id)
 
-    return render(request, "animal.html", {'animal': animal})
-    return render(request, "animal.html", {'animal': animal})
+    return render(request, "animal.html", {'animal': animal, 'tipo': tipo})
 
 def animales(request, animal_type):
     if (animal_type == "Perro"):
