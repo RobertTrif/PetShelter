@@ -2,6 +2,10 @@ version: "3"
 
 services:
     petshelter:
+        environment:
+          - DEBUG=on
+          - SECRET_KEY=your-secret-key
+          - DATABASE_URL=psql://user:un-githubbedpassword@127.0.0.1:8458/database
         build: .
         ports:
           - 8000:8000
