@@ -7,6 +7,9 @@
     <title>Centros</title>
 </head>
 <body>
+    <div id="header">
+        <a href={% url 'Index' %}>Home</a> | <a href={% url 'login' %}>login</a>
+    </div>
     <ul>
         {% for centro in centros %}
         <li><a href={% url 'Centro' centro.id %}>{{ centro.nombre }}</a></li>

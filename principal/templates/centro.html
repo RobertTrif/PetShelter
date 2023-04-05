@@ -7,6 +7,9 @@
     <title>Centro</title>
 </head>
 <body>
+    <div id="header">
+        <a href={% url 'Index' %}>Home</a> | <a href={% url 'login' %}>login</a>
+    </div>
     <p>
         <strong>Nombre:</strong> {{centro.nombre}} <br>
         <strong>Direccion:</strong> {{centro.direccion}}

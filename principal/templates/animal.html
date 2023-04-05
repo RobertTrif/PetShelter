@@ -7,6 +7,9 @@
     <title>{{ animal.nombre}}</title>
 </head>
 <body>
+    <div id="header">
+        <a href={% url 'Index' %}>Home</a> | <a href={% url 'login' %}>login</a>
+    </div>
     <p>
         <strong>Nombre:</strong> {{ animal.nombre}} <br>
         <strong>Peso (Kg):</strong> {{ animal.peso }} <br>

@@ -7,6 +7,9 @@
     <title>Animales</title>
 </head>
 <body>
+    <div id="header">
+        <a href={% url 'Index' %}>Home</a> | <a href={% url 'login' %}>login</a>
+    </div>
     <ul>
         {% for animal in animales %}
         <li><a href={% url 'Animal' animal.id %}>{{ animal.nombre }}</a></li>

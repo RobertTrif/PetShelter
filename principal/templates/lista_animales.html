@@ -7,6 +7,9 @@
     <title>Tipos animales</title>
 </head>
 <body>
+    <div id="header">
+        <a href={% url 'Index' %}>Home</a> | <a href={% url 'login' %}>login</a>
+    </div>
     <ul>
         <li><a href= {% url 'Animales' "Gato" %}>Gatos</a></li>
         <li><a href={% url 'Animales' "Perro" %}>Perros</a></li>
