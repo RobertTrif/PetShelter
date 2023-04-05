@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, get_user_model
+from django.contrib.auth.views import LoginView
 from .models import *
 from .forms import *
 # Create your views here.
@@ -85,6 +86,19 @@ def login_view(request):
         else:
             messages.warning(request, 'Invalid username or password')
     return render(request, 'users/login.html')
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if not user:
+                self.add_error(None, 'Incorrect username or password. Please try again.')
+        return cleaned_data
 
 def logout_view(request):
     logout(request)
