@@ -12,15 +12,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from environ import Env
-import os
-
-env = Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Take environment variables from .env file
-env.read_env(env_file='petshelter/.env')
+env = Env()
+env.read_env(env_file=BASE_DIR/'.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -33,9 +31,29 @@ DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
+#Logs
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+    },
+}
 
 # Application definition
-
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'django.contrib.admin',
@@ -81,15 +99,20 @@ WSGI_APPLICATION = 'petshelter.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
+'''
+DATABASES = {
+    # read os.environ[’DATABASE_URL’] and raises ImproperlyConfigured exception if not found
+    'default': env.db(),
+    # read os.environ[’SQLITE_URL’]
+    'extra': env.db('SQLITE_URL', default='sqlite:////db.sqlite3')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

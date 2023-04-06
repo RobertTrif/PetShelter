@@ -1,11 +1,21 @@
-version: "3"
-
+version: '3'
 services:
-    petshelter:
-        environment:
-          DEBUG: "on"
-          SECRET_KEY: "django-insecure-de27-ks)dx(1wn8isoz1y^-^oav0hngmhda=7o_=bh!11)g949"
-          DATABASE_URL: "sqlite:////db.sqlite3"
-        build: .
-        ports:
-          - 8000:8000
+  web:
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:12
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - "POSTGRES_DB=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+volumes:
+  postgres_data:
