@@ -3,9 +3,9 @@ version: "3"
 services:
     petshelter:
         environment:
-          - DEBUG=on
-          - SECRET_KEY=your-secret-key
-          - DATABASE_URL=psql://user:un-githubbedpassword@127.0.0.1:8458/database
+          DEBUG: "on"
+          SECRET_KEY: "django-insecure-de27-ks)dx(1wn8isoz1y^-^oav0hngmhda=7o_=bh!11)g949"
+          DATABASE_URL: "sqlite:////db.sqlite3"
         build: .
         ports:
           - 8000:8000

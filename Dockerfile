@@ -13,10 +13,9 @@ WORKDIR /app
 # Install pip requirements
 COPY Pipfile Pipfile.lock ./
 RUN pip install pipenv
-RUN pipenv install --system --deploy
+RUN pipenv install --system
 
 COPY . /app
-
 #adding an invocation of the collectstatic command
 RUN python manage.py collectstatic --no-input
 
