@@ -1,20 +1,5 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/static/style/base.css" />
-    <title>PetShelter</title>
-</head>
-
-<body>
-
-<div id="header">
-    <a href={% url 'Index' %}>Home</a> | <a href={% url 'login' %}>login</a>
-</div>
-
+{% include 'base.html' %}
+{% block content %}
 <div id="content"> 
 <h1>
     PetShelter
@@ -22,5 +7,4 @@
     <li><a href= {% url 'Centros' %}>Centros</a></li>
     <li><a href={% url 'Lista_animales' %}>Animales</a></li>
 </div>
-</body>
-</html>
+{% endblock %}
