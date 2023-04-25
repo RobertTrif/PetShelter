@@ -1,8 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from .models import *
-import datetime
+from django.forms import ModelForm
 
 class RegistroNuevoCliente(UserCreationForm):
     nombre = forms.CharField(max_length=40, widget=forms.TextInput, required=True)
@@ -49,3 +49,28 @@ class RegistroNuevoTrabajador(UserCreationForm):
             centro=centro)
         nuevoTrabajador.save()
         return web_user
+
+class NewPerro(ModelForm):
+    class Meta:
+        model = Perro
+        fields = "__all__"
+        exclude = ()
+
+class NewGato(ModelForm):
+    class Meta:
+        model = Gato
+        fields = "__all__"
+        exclude = ()
+
+class NewOtro(ModelForm):
+    class Meta:
+        model = Otro
+        fields = "__all__"
+        exclude = ()
+
+class NewCentro(ModelForm):
+    class Meta:
+        model = Centro
+        fields = "__all__"
+        exclude = ()
+

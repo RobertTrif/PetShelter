@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import principal.views as wv
+import principal.forms as form
 from django.contrib.auth import views as auth_views
 from principal.views import CustomLoginView
+from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
+import principal.models as model
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,5 +36,18 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('login/', CustomLoginView.as_view(), name='login'),
-    
+    path('administracion/', wv.administracion, name='Administracion'),
+    path('administracion/crear_perro/', 
+         CreateView.as_view(model=model.Perro, template_name = 'new_animal.html', form_class = form.NewPerro),
+         name='New_perro'),
+    path('administracion/crear_gato/', 
+         CreateView.as_view(model=model.Gato, template_name = 'new_animal.html', form_class = form.NewGato),
+         name='New_gato'),
+    path('administracion/crear_otro/', 
+         CreateView.as_view(model=model.Otro, template_name = 'new_animal.html', form_class = form.NewOtro),
+         name='New_otro'),
+    path('administracion/crear_centro/', 
+         CreateView.as_view(model=model.Centro, template_name = 'new_animal.html', form_class = form.NewCentro),
+         name='New_centro'),
+    path('administracion/<int:pk>', DetailView.as_view(model= model.Animal, template_name='animal_creado.html'), name='Animal_creado'),
 ]
