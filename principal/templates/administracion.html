@@ -1,0 +1,15 @@
+{% include 'base.html' %}
+<ul>
+    <li>
+    <form name="link">
+        <label>Nuevo animal:</label>
+        <select name="menu">  
+            <option value={% url 'New_perro' %}>Perro</option> 
+            <option value={% url 'New_gato' %}>Gato</option> 
+            <option value={% url 'New_otro' %}>Otro</option> 
+        </select> 
+        <input type="button" onClick="location=document.link.menu.options[document.link.menu.selectedIndex].value;" value="Crear"> 
+    </form>
+    </li>
+    <li><a href={% url 'New_centro' %}>Nuevo centro</a></li>
+</ul>

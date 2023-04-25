@@ -47,6 +47,9 @@ def centro(request, centro_id):
     centro = Centro.objects.get(pk=centro_id)
     return render(request, "centro.html", {'centro':centro} )
 
+def administracion(request):
+    return render(request, "administracion.html")
+
 class RegistroClienteView(CreateView):
     model = WebUser
     form_class = RegistroNuevoCliente

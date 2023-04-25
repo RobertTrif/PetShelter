@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
 
 # Create your models here.
 class WebUser(AbstractUser):
@@ -12,6 +13,9 @@ class Centro(models.Model):
 
     def __str__(self):
         return str(self.nombre)
+    
+    def get_absolute_url(self):
+        return reverse('Animal_creado', kwargs={'pk':self.pk})
 
 class Trabajador(models.Model):
     User = models.OneToOneField(WebUser, on_delete=models.CASCADE, primary_key=True)
@@ -61,12 +65,21 @@ class Gato(Animal):
     pelaje = models.CharField(max_length=256)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('Animal_creado', kwargs={'pk':self.pk})
+
 class Perro(Animal):
     raza = models.CharField(max_length=256)
     pelaje = models.CharField(max_length=256)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse('Animal_creado', kwargs={'pk':self.pk})
+
 class Otro(Animal):
     raza = models.CharField(max_length=256)
     pelaje = models.CharField(max_length=256)
     centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('Animal_creado', kwargs={'pk':self.pk})
