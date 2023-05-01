@@ -7,6 +7,8 @@ from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.views import LoginView
 from .models import *
 from .forms import *
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 # create a simple view index
 def index(request):
@@ -106,3 +108,82 @@ class CustomLoginView(LoginView):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+@login_required(login_url='login')
+def updateAnimal(request, pk):
+    if request.user.is_trabajador:
+        animal = None
+        form = None
+        try:
+            animal = Perro.objects.get(id=pk)
+            form = NewPerro(instance=animal)
+        except Perro.DoesNotExist:
+            try:
+                animal = Gato.objects.get(id=pk)
+                form = NewGato(instance=animal)
+            except Gato.DoesNotExist:
+                try:
+                    animal = Otro.objects.get(id=pk)
+                    form = NewOtro(instance=animal)
+                except Otro.DoesNotExist:
+                    animal = None
+        if animal is None:
+            return redirect('/')
+        if request.method == 'POST':
+            if isinstance(animal, Perro):
+                form = NewPerro(request.POST, instance=animal)
+            elif isinstance(animal, Gato):
+                form = NewGato(request.POST, instance=animal)
+            elif isinstance(animal, Otro):
+                form = NewOtro(request.POST, instance=animal)
+            form.instance.id = pk
+            if form.is_valid():
+                form.save()
+                return redirect('/animal/'+str(pk))
+        context = {'form': form}
+        return render(request, 'edit_animal.html', context)
+    else:
+        return redirect('/')
+
+@login_required(login_url='login')
+def updateCentro(request, pk):
+    if request.user.is_trabajador:
+        centro = Centro.objects.get(id=pk)
+        form = NewCentro(instance=centro)
+        if request.method == 'POST':
+            form = NewCentro(request.POST, instance=centro)
+            form.instance.id = pk
+            if form.is_valid():
+                form.save()
+                return redirect('/centro/'+str(pk))
+        context = {'form': form}
+        return render(request, 'edit_centro.html', context)
+    else:
+        return redirect('/')
+
+@login_required(login_url='login')
+def updateUser(request):
+    user = None
+    form = None
+    try:
+        user = Cliente.objects.get(User_id=request.user.id)
+        form = updateCliente(instance=user)
+    except Cliente.DoesNotExist:
+        try:
+            user = Trabajador.objects.get(User_id=request.user.id)
+            form = updateTrabajador(instance=user)
+        except Trabajador.DoesNotExist:
+            user = None
+    if user is None:
+        return redirect('/')
+    if request.method == 'POST':
+        if isinstance(user, Cliente):
+            form = updateCliente(request.POST, instance=user)
+        elif isinstance(user, Trabajador):
+            form = updateTrabajador(request.POST, instance=user)
+        form.instance.id = request.user.id
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {'form': form}
+    return render(request, 'edit_user.html', context)
