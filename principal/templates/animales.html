@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animales</title>
-</head>
-<body>
+{% include 'base.html' %}
+{% block content %}
     <ul>
         {% for animal in animales %}
         <li><a href={% url 'Animal' animal.id %}>{{ animal.nombre }}</a></li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

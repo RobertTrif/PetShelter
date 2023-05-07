@@ -1,39 +1,10 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="/static/style/base.css" />
-    <title>MyRestaurants by MyRecommendations</title>
-</head>
-
-<body>
-
-<div id="header">
-            <p><a href="/accounts/login/?next=/petshelter/">login</a></p>
-</div>
-
-<div id="sidebar">
-        <ul>
-            <li><a href="/petshelter/">Home</a></li>
-        </ul>
-</div>
-
-<div id="content">
-    
+{% include 'base.html' %}
+{% block content %}
+<div id="content"> 
 <h1>
     PetShelter
-    
 </h1>
-<ul>
     <li><a href= {% url 'Centros' %}>Centros</a></li>
     <li><a href={% url 'Lista_animales' %}>Animales</a></li>
-</ul>
 </div>
-<div id="footer">
-</div>
-
-</body>
-</html>
+{% endblock %}

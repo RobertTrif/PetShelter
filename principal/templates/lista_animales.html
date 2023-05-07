@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tipos animales</title>
-</head>
-<body>
+{% include 'base.html' %}
+{% block content %}
     <ul>
         <li><a href= {% url 'Animales' "Gato" %}>Gatos</a></li>
         <li><a href={% url 'Animales' "Perro" %}>Perros</a></li>
         <li><a href={% url 'Animales' "Otro" %}>Otros</a></li>
         <li><a href={% url 'Animales' "Animal" %}>Todos los animales</a></li>
     </ul>
-</body>
-</html>
+{% endblock %}
