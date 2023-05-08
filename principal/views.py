@@ -111,6 +111,9 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import  Gato, Perro, Otro
 
 # views.py
 def eliminar(request, animal_type):
@@ -129,11 +132,6 @@ def eliminar(request, animal_type):
     return render(request, "eliminar.html", context)
 
 
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import  Gato, Perro, Otro
-
 def eliminar_confirmar(request, animal_type, animal_id):
     if animal_type == "Perro":
         AnimalModel = Perro
@@ -148,6 +146,4 @@ def eliminar_confirmar(request, animal_type, animal_id):
     animal.delete()
 
     messages.success(request, f"{animal.nombre} ha sido eliminado exitosamente.")
-
     return redirect("eliminar", animal_type=animal_type)
-
