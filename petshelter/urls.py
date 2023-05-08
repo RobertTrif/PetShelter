@@ -16,8 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import principal.views as wv
-<<<<<<< Updated upstream
-=======
+
 import principal.forms as form
 from django.contrib.auth import views as auth_views
 from principal.views import CustomLoginView
@@ -28,7 +27,6 @@ from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.urls import path
 from principal.views import  eliminar_confirmar , eliminar
->>>>>>> Stashed changes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,8 +36,6 @@ urlpatterns = [
     path ('lista_animales/', wv.lista_animales, name='Lista_animales'),
     path ('centros/', wv.centros, name='Centros'),
     path ('centro/<int:centro_id>', wv.centro, name='Centro'),
-<<<<<<< Updated upstream
-=======
     path ('registro_cliente/', wv.RegistroClienteView.as_view(), name='Registro_cliente'),
     path ('registro_trabajador/', wv.RegistroTrabajadorView.as_view(), name='Registro_trabajador'),
     path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
@@ -63,5 +59,5 @@ urlpatterns = [
     # Elliminacion de animales 
     path('administracion/eliminar_animal/<str:animal_type>/', eliminar, name='eliminar'),
     path('administracion/eliminar_animal/<str:animal_type>/<int:animal_id>/', wv.eliminar_confirmar, name='eliminar_confirmar'),
->>>>>>> Stashed changes
+
 ]

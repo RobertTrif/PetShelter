@@ -1,10 +1,9 @@
-<<<<<<< Updated upstream
+
 from django.views import generic
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from principal.models import Centro, Trabajador, Cliente, Animal, Adopcion, Gato, Perro, Otro
-=======
 from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -15,8 +14,6 @@ from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.views import LoginView
 from .models import *
 from .forms import *
-
->>>>>>> Stashed changes
 
 # Create your views here.
 # create a simple view index
@@ -53,8 +50,7 @@ def centro(request, centro_id):
     centro = Centro.objects.get(pk=centro_id)
     return render(request, "centro.html", {'centro':centro} )
 
-<<<<<<< Updated upstream
-=======
+
 def administracion(request):
     return render(request, "administracion.html")
 
@@ -155,6 +151,3 @@ def eliminar_confirmar(request, animal_type, animal_id):
 
     return redirect("eliminar", animal_type=animal_type)
 
-
-
->>>>>>> Stashed changes
