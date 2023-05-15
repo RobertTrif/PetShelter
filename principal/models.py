@@ -15,7 +15,7 @@ class Centro(models.Model):
         return str(self.nombre)
     
     def get_absolute_url(self):
-        return reverse('Animal_creado', kwargs={'pk':self.pk})
+        return reverse('Centro_creado', kwargs={'pk':self.pk})
 
 class Trabajador(models.Model):
     User = models.OneToOneField(WebUser, on_delete=models.CASCADE, primary_key=True)

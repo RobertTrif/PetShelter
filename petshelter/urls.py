@@ -49,5 +49,6 @@ urlpatterns = [
     path('administracion/crear_centro/', 
          CreateView.as_view(model=model.Centro, template_name = 'new_animal.html', form_class = form.NewCentro),
          name='New_centro'),
-    path('administracion/<int:pk>', DetailView.as_view(model= model.Animal, template_name='animal_creado.html'), name='Animal_creado'),
+    path('administracion/animal_creado/<int:pk>', DetailView.as_view(model= model.Animal, template_name='animal_creado.html'), name='Animal_creado'),
+    path('administracion/centro_creado/<int:pk>', DetailView.as_view(model= model.Centro, template_name='centro_creado.html'), name='Centro_creado'),
 ]

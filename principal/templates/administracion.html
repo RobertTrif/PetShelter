@@ -1,9 +1,11 @@
 {% include 'base.html' %}
+{% if user.is_trabajador %} 
 <ul>
     <li>
     <form name="link">
         <label>Nuevo animal:</label>
         <select name="menu">  
+            
             <option value={% url 'New_perro' %}>Perro</option> 
             <option value={% url 'New_gato' %}>Gato</option> 
             <option value={% url 'New_otro' %}>Otro</option> 
@@ -13,3 +15,6 @@
     </li>
     <li><a href={% url 'New_centro' %}>Nuevo centro</a></li>
 </ul>
+{% else %}
+    <h4>Para acceder a esta seccion necesitas iniciar sesion con tu cuenta de trabajdor del centro </h4>
+{%endif%}
