@@ -18,6 +18,7 @@ RUN pipenv install --system
 COPY . /app
 #adding an invocation of the collectstatic command
 RUN python manage.py collectstatic --no-input
+RUN docker-compose exec web python manage.py migrate
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers

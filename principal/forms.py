@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserChangeForm
 from django.db import transaction
 from .models import *
 from django.forms import ModelForm
@@ -74,3 +75,18 @@ class NewCentro(ModelForm):
         fields = "__all__"
         exclude = ()
 
+class updateTrabajador(ModelForm):
+    class Meta:
+        model = Trabajador
+        fields = "__all__"
+        exclude = ["User"]
+class updateCliente(ModelForm):
+    class Meta:
+        model = Cliente
+        fields = "__all__"
+        exclude = ["User"]
+
+class UsuarioForm(UserChangeForm):
+    class Meta:
+        model = WebUser
+        fields = "__all__"

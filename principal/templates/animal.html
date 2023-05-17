@@ -7,5 +7,7 @@
         <strong>Raza:</strong> {{tipo.raza}} <br>
         <strong>Pelaje:</strong> {{tipo.pelaje}} <br>
         <strong>Centro:</strong> <a href={% url 'Centro' tipo.centro.id %}>{{ tipo.centro.nombre }}</a>
+        <br>
+        {% if user.is_trabajador %}<a href="{% url 'edit_animal' animal.id %}">Editar animal</a> {% endif %}
     </p>
 {% endblock %}
