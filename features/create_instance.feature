@@ -1,11 +1,8 @@
 Feature: Create instances
-workers will have to be able to create new instances
+    workers will have to be able to create new instances
     
-    Background: There is a worker user
-        Given Exists a worker "username" with password "password"
+    Background: There is a registered worker
+        Given Exists a worker "worker1_" with password "Hello67_"
 
-    Scenario: Register a cat 
-    Given I login as worker "user" with password "password"
-    When I register a cat
-        | Nombre | Peso | Color | Raza   | Pelaje |
-        | Gato   | 5    | Blanco| Europeo| Corto  |
+    Scenario: Create a cat
+        Given I login as worker "worker1_" with password "Hello67_"
