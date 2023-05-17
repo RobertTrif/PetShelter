@@ -11,6 +11,9 @@ django-environ = "*"
 psycopg2-binary = "*"
 behave = "*"
 splinter = "*"
+behave-django = "*"
+selenium = "*"
+pipfile = "*"
 
 [dev-packages]
 
