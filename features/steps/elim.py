@@ -77,6 +77,7 @@ def step_impl(context, animal):
             form.find_by_value('Crear').first.click()
 
 
+
 @when('I click on the "Administracion" button')
 def step_when_click_administracion_button(context):
     administracion_link = context.browser.find_by_xpath('//a[text()="Administracion"]').first
@@ -113,3 +114,22 @@ def step_then_delete_animal(context, animal_name):
 @then('I wait for {seconds} seconds')
 def step_then_wait(context, seconds):
     time.sleep(int(seconds))
+
+@then('I\'m viewing a message "{message}"')
+def step_impl(context, message):
+    #assert that the animal was created correctly
+    assert context.browser.is_text_present(message)
+
+@step('I\'m viewing the page details for this "{animal}"')
+def step_impl(context, animal):
+    #assert that the animal was created correctly
+    uri = "/animales/" + animal
+    context.browser.visit(context.get_url(uri))
+    table = context.table
+    context.browser.links.find_by_text(table[0][0]).click()
+    assert context.browser.is_text_present('Nombre: ' + table[0][0])
+    assert context.browser.is_text_present('Peso (Kg): ' + table[0][1])
+    assert context.browser.is_text_present('Color: ' + table[0][2])
+    assert context.browser.is_text_present('Raza: ' + table[0][3])
+    assert context.browser.is_text_present('Pelaje: ' + table[0][4])
+    assert context.browser.is_text_present('Centro: ' + table[0][5])

@@ -131,6 +131,8 @@ def eliminar(request, animal_type):
         AnimalModel = Gato
     elif animal_type == "Otro":
         AnimalModel = Otro
+    elif animal_type == "Centro":
+        AnimalModel = Centro
     else:
         AnimalModel = Animal
 
@@ -147,6 +149,8 @@ def eliminar_confirmar(request, animal_type, animal_id):
         AnimalModel = Gato
     elif animal_type == "Otro":
         AnimalModel = Otro
+    elif animal_type == "Centro":
+        AnimalModel = Centro    
     else:
         AnimalModel = Animal
 
