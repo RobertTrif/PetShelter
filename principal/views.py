@@ -86,7 +86,6 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-    
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -115,8 +114,16 @@ def logout_view(request):
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import  Gato, Perro, Otro
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import user_passes_test
 
-# views.py
+
+def is_trabajador(user):
+    return user.is_authenticated and user.is_trabajador
+
+login_required_trabajador = user_passes_test(is_trabajador)
+
+@login_required(login_url='pagina_no_encontrada')
 def eliminar(request, animal_type):
     if animal_type == "Perro":
         AnimalModel = Perro
@@ -132,7 +139,7 @@ def eliminar(request, animal_type):
     context = {"animales": animales, "animal_type": animal_type}
     return render(request, "eliminar.html", context)
 
-
+@login_required(login_url='/pagina_no_encontrada')
 def eliminar_confirmar(request, animal_type, animal_id):
     if animal_type == "Perro":
         AnimalModel = Perro
@@ -148,3 +155,7 @@ def eliminar_confirmar(request, animal_type, animal_id):
 
     messages.success(request, f"{animal.nombre} ha sido eliminado exitosamente.")
     return redirect("eliminar", animal_type=animal_type)
+
+
+def pagina_no_encontrada(request):
+    return render(request, 'pagina_no_encontrada.html')

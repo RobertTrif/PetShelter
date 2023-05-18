@@ -42,6 +42,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('administracion/', wv.administracion, name='Administracion'),
+    # Crear de animales 
     path('administracion/crear_perro/', 
          CreateView.as_view(model=model.Perro, template_name = 'new_animal.html', form_class = form.NewPerro),
          name='New_perro'),
@@ -58,6 +59,7 @@ urlpatterns = [
     
     # Elliminacion de animales 
     path('administracion/eliminar_animal/<str:animal_type>/', eliminar, name='eliminar'),
+    path('administracion/<int:pk>', DetailView.as_view(model= model.Animal, template_name='animal_creado.html'), name='Animal_creado'),
     path('administracion/eliminar_animal/<str:animal_type>/<int:animal_id>/', wv.eliminar_confirmar, name='eliminar_confirmar'),
-
+    path('pagina_no_encontrada/', wv.pagina_no_encontrada, name='pagina_no_encontrada'),
 ]
