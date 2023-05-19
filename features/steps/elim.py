@@ -37,17 +37,6 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 
-@when('I register a center')
-def step_impl(context):
-    #fill the form
-    for row in context.table:
-        context.browser.visit(context.get_url('/administracion/crear_centro/'))
-        form = context.browser.find_by_tag('form').first
-        for heading in row.headings:
-            context.browser.fill(heading, row[heading])
-    form.find_by_value('Crear').first.click()
-    #assert that the center was created correctly
-
 @step('I\'m viewing the details of this center')
 def step_impl(context):
     context.browser.visit(context.get_url('/centros/'))
@@ -55,26 +44,6 @@ def step_impl(context):
     context.browser.links.find_by_text(table[0][0]).click()
     assert context.browser.is_text_present('Nombre: ' + table[0][0])
     assert context.browser.is_text_present('Direccion: ' + table[0][1])
-
-@when('I register a "{animal}"')
-def step_impl(context, animal):
-    #create a centro for this animal
-    from principal.models import Centro
-    centro = Centro.objects.create(nombre=context.table[0][5], direccion="direccion")
-    centro.save()
-    #fill the form
-    for row in context.table:
-        uri = "/administracion/crear_" + animal + "/"
-        context.browser.visit(context.get_url(uri))
-        if not context.browser.is_text_present("Para acceder a esta seccion necesitas iniciar sesion con tu cuenta de trabajdor del centro"):
-            form = context.browser.find_by_tag('form').first
-            for heading in row.headings:
-                if (heading != "centro"):
-                    context.browser.fill(heading, row[heading])
-                else:
-                    context.browser.find_by_name('centro').select(str(centro.pk))
-
-            form.find_by_value('Crear').first.click()
 
 
 @when('I click on the "Administracion" button')
