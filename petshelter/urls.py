@@ -53,5 +53,6 @@ urlpatterns = [
     path('animal_edit/<str:pk>/', wv.updateAnimal, name='edit_animal'),
     path('centro_edit/<str:pk>/', wv.updateCentro, name='edit_centro'),
     path('edit_user/', wv.updateUser, name='edit_user'),
+    path('edit_password/', wv.updatePassword, name='edit_password'),
     path('administracion/centro_creado/<int:pk>', DetailView.as_view(model= model.Centro, template_name='centro_creado.html'), name='Centro_creado'),
 ]

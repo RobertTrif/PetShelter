@@ -86,7 +86,8 @@ class updateCliente(ModelForm):
         fields = "__all__"
         exclude = ["User"]
 
-class UsuarioForm(UserChangeForm):
+class updatePasswordForm(UserChangeForm):
     class Meta:
         model = WebUser
-        fields = "__all__"
+        fields = ['password']
+        exclude = ('last_login', 'is_superuser', 'id','username', 'first_name', 'last_name',)

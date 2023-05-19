@@ -188,3 +188,20 @@ def updateUser(request):
             return redirect('/')
     context = {'form': form}
     return render(request, 'edit_user.html', context)
+
+@login_required(login_url='login')
+def updatePassword(request):
+    
+    user_id = request.user.id
+    print(user_id)
+    user = WebUser.objects.get(id=request.user.id)
+    form = updatePasswordForm(instance=user)
+    if request.method == 'POST':
+        form = NewCentro(request.POST, instance=centro)
+        form.instance.id = pk
+        if form.is_valid():
+            form.save()
+            return redirect('/centro/'+str(pk))
+    context = {'form': form}
+    return render(request, 'edit_centro.html', context)
+    
