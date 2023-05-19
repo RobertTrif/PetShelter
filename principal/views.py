@@ -1,4 +1,11 @@
-from django.shortcuts import render, redirect
+
+from django.views import generic
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
+from principal.models import Centro, Trabajador, Cliente, Animal, Adopcion, Gato, Perro, Otro
+from django.http import Http404, HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic.edit import CreateView, UpdateView
@@ -7,8 +14,7 @@ from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.views import LoginView
 from .models import *
 from .forms import *
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 # create a simple view index
 def index(request):
@@ -17,14 +23,9 @@ def index(request):
 # print information of specific animal
 def animal(request, animal_id):
     animal = Animal.objects.get(pk=animal_id)
-    if (Perro.objects.filter(pk=animal_id).exists()):
-        tipo = Perro.objects.get(pk=animal_id)
-    elif (Gato.objects.filter(pk=animal_id).exists()):
-        tipo = Gato.objects.get(pk=animal_id)
-    elif (Otro.objects.filter(pk=animal_id).exists()):
-        tipo = Otro.objects.get(pk=animal_id)
 
-    return render(request, "animal.html", {'animal': animal, 'tipo': tipo})
+    return render(request, "animal.html", {'animal': animal})
+    return render(request, "animal.html", {'animal': animal})
 
 def animales(request, animal_type):
     if (animal_type == "Perro"):
@@ -48,6 +49,7 @@ def centros(request):
 def centro(request, centro_id):
     centro = Centro.objects.get(pk=centro_id)
     return render(request, "centro.html", {'centro':centro} )
+
 
 def administracion(request):
     return render(request, "administracion.html")
@@ -84,7 +86,6 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-    
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -109,6 +110,55 @@ class CustomLoginView(LoginView):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import  Gato, Perro, Otro
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import user_passes_test
+
+
+def is_trabajador(user):
+    return user.is_authenticated and user.is_trabajador
+
+login_required_trabajador = user_passes_test(is_trabajador)
+
+@login_required(login_url='pagina_no_encontrada')
+def eliminar(request, animal_type):
+    if animal_type == "Perro":
+        AnimalModel = Perro
+    elif animal_type == "Gato":
+        AnimalModel = Gato
+    elif animal_type == "Otro":
+        AnimalModel = Otro
+    else:
+        AnimalModel = Animal
+
+    animales = AnimalModel.objects.all()
+
+    context = {"animales": animales, "animal_type": animal_type}
+    return render(request, "eliminar.html", context)
+
+@login_required(login_url='/pagina_no_encontrada')
+def eliminar_confirmar(request, animal_type, animal_id):
+    if animal_type == "Perro":
+        AnimalModel = Perro
+    elif animal_type == "Gato":
+        AnimalModel = Gato
+    elif animal_type == "Otro":
+        AnimalModel = Otro
+    else:
+        AnimalModel = Animal
+
+    animal = get_object_or_404(AnimalModel, pk=animal_id)
+    animal.delete()
+
+    messages.success(request, f"{animal.nombre} ha sido eliminado exitosamente.")
+    return redirect("eliminar", animal_type=animal_type)
+
+
+def pagina_no_encontrada(request):
+    return render(request, 'pagina_no_encontrada.html')
 
 @login_required(login_url='login')
 def updateAnimal(request, pk):
