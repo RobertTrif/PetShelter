@@ -109,3 +109,10 @@ def step_impl(context, animal):
     assert context.browser.is_text_present('Raza: ' + table[0][3])
     assert context.browser.is_text_present('Pelaje: ' + table[0][4])
     assert context.browser.is_text_present('Centro: ' + table[0][5])
+
+@step('I\'m viewing the page details for this after modify a user')
+def step_impl(context):
+    table = context.table
+    context.browser.visit(context.get_url('/'))
+    assert context.browser.is_text_present(table[0][0] +" "+ table[0][1])
+

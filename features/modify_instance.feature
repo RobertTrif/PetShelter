@@ -78,3 +78,6 @@ Feature: Modify instances
         When I modify a user
             | nombre | apellidos | telefono | email |
             | Osito | Amoroso | 123456777 | random@gmail.com |
+        And I'm viewing the page details for this after modify a user
+            | nombre | apellidos |
+            | Osito | Amoroso |
