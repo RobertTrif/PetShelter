@@ -3,6 +3,22 @@ Feature: Eliminar gato
   Background:
     Given Exists a worker "worker1" with password "Hello67"
   
+    Scenario: Create a Centro
+        Given I login as worker "worker1" with password "Hello67"
+        When I register a center
+           | nombre   | direccion  | 
+           | centro_2 | direccio_2 |
+        Then I'm viewing a message "Centro creado correctamente"
+        When I click on the "Administracion" button
+        Then I should be redirected to the "Administracion" page
+        When I select "Centro" from "Eliminar animal"
+        Then I wait for 6 seconds
+        Then I should delete de animal "centro_2"
+        When I click on the "Administracion" button
+        Then I should be redirected to the "Administracion" page
+        When I select "Centro" from "Eliminar animal"
+        Then I wait for 6 seconds
+
     Scenario: Create a Otro
         Given I login as worker "worker1" with password "Hello67"
        When I register a "otro"
