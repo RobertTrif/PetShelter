@@ -13,6 +13,14 @@ def step_impl(context, username, password):
                                            adresa="adresa", centro=centro)
     trabajador.save()
 
+@given('Exists a client "{username}" with password "{password}"')
+def step_impl(context, username, password):
+    from principal.models import Cliente, WebUser
+    user = WebUser.objects.create_user(is_cliente = True, password=password, username=username)
+    user.save()
+    cliente = Cliente.objects.create(User=user, nombre="Pepe",apellidos="Juna",telefono=698524587,email="email@email.email",anos=93)
+    cliente.save()
+
 @given('I login as worker "{username}" with password "{password}"')
 def step_impl(context, username, password):
     from principal.models import WebUser, Trabajador
@@ -25,7 +33,23 @@ def step_impl(context, username, password):
     form.find_by_value('login').first.click()
     assert context.browser.is_text_present('Conectado como ' + trab.nombre + ' ' +trab.apellidos)
 
+@given('I login as client "{username}" with password "{password}"')
+def step_impl(context, username, password):
+    from principal.models import WebUser, Cliente
+    user = WebUser.objects.get(username=username)
+    client = Cliente.objects.get(User = user)
+    context.browser.visit(context.get_url('/login/'))
+    form = context.browser.find_by_tag('form').first
+    context.browser.fill('username', username)
+    context.browser.fill('password', password)
+    form.find_by_value('login').first.click()
+    assert context.browser.is_text_present('Conectado como ' + client.nombre + ' ' +client.apellidos)
+
 @given('I\'m not logged in')
 def step_impl(context):
     context.browser.visit(context.get_url('/logout/'))
     assert context.browser.is_text_present('login')
+
+@then("I'm redirected to the login form")
+def step_impl(context):
+    assert context.browser.url.startswith(context.get_url('login'))

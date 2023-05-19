@@ -29,7 +29,7 @@ def step_impl(context, animal):
     for row in context.table:
         uri = "/administracion/crear_" + animal + "/"
         context.browser.visit(context.get_url(uri))
-        if not context.browser.is_text_present("Para acceder a esta seccion necesitas iniciar sesion con tu cuenta de trabajdor del centro"):
+        if context.browser.url == context.get_url(uri):
             form = context.browser.find_by_tag('form').first
             for heading in row.headings:
                 if (heading != "centro"):
@@ -62,3 +62,13 @@ def step_impl(context, animal):
 def step_impl(context, count):
     from principal.models import Gato
     assert count == Gato.objects.count()
+
+@then('There are {count:n} dogs')
+def step_impl(context, count):
+    from principal.models import Perro
+    assert count == Perro.objects.count()
+
+@then('There are {count:n} others')
+def step_impl(context, count):
+    from principal.models import Otro
+    assert count == Otro.objects.count()
