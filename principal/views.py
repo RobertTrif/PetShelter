@@ -3,10 +3,17 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, get_user_model
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from .models import *
 from .forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+    
+#html request
+def api(request):
+    return render(request, "/APi-pages/basic-search-dog.html")
+
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -49,9 +56,57 @@ def centro(request, centro_id):
     centro = Centro.objects.get(pk=centro_id)
     return render(request, "centro.html", {'centro':centro} )
 
+@login_required(login_url='login')
 def administracion(request):
-    return render(request, "administracion.html")
+    if request.user.is_trabajador:
+        return render(request, "administracion.html")
+    else:
+        return redirect('/login')
+    
+class Crear_perro(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    login_url = '/login'
+    redirect_field_name = 'login'
+    model = Perro
+    template_name = 'new_animal.html'
+    form_class = NewPerro
+    def test_func(self):
+        return self.request.user.is_trabajador
+    def handle_no_permission(self):
+        return redirect('/login')
 
+class Crear_gato(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    login_url = '/login'
+    redirect_field_name = 'login'
+    model = Gato
+    template_name = 'new_animal.html'
+    form_class = NewGato
+    def test_func(self):
+        return self.request.user.is_trabajador
+    def handle_no_permission(self):
+        return redirect('/login')
+
+class Crear_otro(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    login_url = '/login'
+    redirect_field_name = 'login'
+    model = Otro
+    template_name = 'new_animal.html'
+    form_class = NewOtro
+    def test_func(self):
+        return self.request.user.is_trabajador
+    def handle_no_permission(self):
+        return redirect('/login')
+
+class Crear_centro(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    login_url = '/login'
+    redirect_field_name = 'login'
+    model = Centro
+    template_name = 'new_animal.html'
+    form_class = NewCentro
+    def test_func(self):
+        return self.request.user.is_trabajador
+    def handle_no_permission(self):
+        return redirect('/login')
+   
 class RegistroClienteView(CreateView):
     model = WebUser
     form_class = RegistroNuevoCliente

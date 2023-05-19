@@ -23,6 +23,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 import principal.models as model
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path ('', wv.index, name='Index'),
@@ -37,22 +38,15 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('administracion/', wv.administracion, name='Administracion'),
-    path('administracion/crear_perro/', 
-         CreateView.as_view(model=model.Perro, template_name = 'new_animal.html', form_class = form.NewPerro),
-         name='New_perro'),
-    path('administracion/crear_gato/', 
-         CreateView.as_view(model=model.Gato, template_name = 'new_animal.html', form_class = form.NewGato),
-         name='New_gato'),
-    path('administracion/crear_otro/', 
-         CreateView.as_view(model=model.Otro, template_name = 'new_animal.html', form_class = form.NewOtro),
-         name='New_otro'),
-    path('administracion/crear_centro/', 
-         CreateView.as_view(model=model.Centro, template_name = 'new_animal.html', form_class = form.NewCentro),
-         name='New_centro'),
+    path('administracion/crear_perro/', wv.Crear_perro.as_view(), name='New_perro'),
+    path('administracion/crear_gato/', wv.Crear_gato.as_view(), name='New_gato'),
+    path('administracion/crear_otro/', wv.Crear_otro.as_view(), name='New_otro'),
+    path('administracion/crear_centro/', wv.Crear_centro.as_view(),name='New_centro'),
     path('administracion/animal_creado/<int:pk>', DetailView.as_view(model= model.Animal, template_name='animal_creado.html'), name='Animal_creado'),
     path('animal_edit/<str:pk>/', wv.updateAnimal, name='edit_animal'),
     path('centro_edit/<str:pk>/', wv.updateCentro, name='edit_centro'),
     path('edit_user/', wv.updateUser, name='edit_user'),
     path('edit_password/', wv.updatePassword, name='edit_password'),
     path('administracion/centro_creado/<int:pk>', DetailView.as_view(model= model.Centro, template_name='centro_creado.html'), name='Centro_creado'),
+    path('api/', wv.api, name='API'),
 ]

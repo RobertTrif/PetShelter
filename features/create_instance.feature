@@ -1,8 +1,9 @@
 Feature: Create instances
     workers will have to be able to create new instances
     
-    Background: There is a registered worker
+    Background: There is a registered worker and client
         Given Exists a worker "worker1_" with password "Hello67_"
+        And Exists a client "cliente1_" with password "Goodbye67_"
 
     Scenario: Create a center
         Given I login as worker "worker1_" with password "Hello67_"
@@ -49,5 +50,29 @@ Feature: Create instances
     When I register a "gato"
         | nombre | peso | color   | raza    | pelaje | centro      |
         | Michi  | 5    | Marron  | Abisino | corto  | centro_gato |
-    Then I'm viewing a message "Para acceder a esta seccion necesitas iniciar sesion con tu cuenta de trabajdor del centro"
+    Then I'm redirected to the login form
     And There are 0 cats
+
+    Scenario: Try to register a dog but not logged in
+    Given I'm not logged in
+    When I register a "perro"
+        | nombre | peso | color | raza   | pelaje | centro       |
+        | Rufus  | 40   | Beix  | Golden | largo  | centro_perro |
+    Then I'm redirected to the login form
+    And There are 0 dogs
+
+    Scenario: Try to register a other but not logged in
+    Given I'm not logged in
+    When I register a "otro"
+        | nombre    | peso | color  | raza | pelaje | centro      |
+        | Sebastian | 500  | Marron | Oso  | Largo  | centro_otro |
+    Then I'm redirected to the login form
+    And There are 0 others
+
+    Scenario: Try to register a other but i'm logged as a client
+    Given I login as client "cliente1_" with password "Goodbye67_"
+    When I register a "otro"
+        | nombre    | peso | color  | raza | pelaje | centro      |
+        | Sebastian | 500  | Marron | Oso  | Largo  | centro_otro |
+    Then I'm redirected to the login form
+    And There are 0 others
