@@ -3,78 +3,12 @@ from behave import *
 from selenium.webdriver.support.ui import Select
 use_step_matcher("parse")
 import time
-
-
-@given('Exists a worker "{username}" with password "{password}"')
-def step_impl(context, username, password):
-    from principal.models import Trabajador, WebUser, Centro
-    centro = Centro.objects.create(nombre="centro", direccion="direccion")
-    centro.save()
-    user = WebUser.objects.create_user(is_trabajador = True, password=password, username=username)
-    user.save()
-    trabajador = Trabajador.objects.create(User=user, nombre="Pepe", apellidos="Marin", telefono=698524587, email="email@email.email",anos=93, departamento="departamento", 
-                                           adresa="adresa", centro=centro)
-    trabajador.save()
-
-@given('I login as worker "{username}" with password "{password}"')
-def step_impl(context, username, password):
-    from principal.models import WebUser, Trabajador
-    user = WebUser.objects.get(username=username)
-    trab = Trabajador.objects.get(User = user)
-    context.browser.visit(context.get_url('/login/'))
-    form = context.browser.find_by_tag('form').first
-    context.browser.fill('username', username)
-    context.browser.fill('password', password)
-    form.find_by_value('login').first.click()
-    assert context.browser.is_text_present('Conectado como ' + trab.nombre + ' ' +trab.apellidos)
-
-
 from splinter import Browser
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 import time
-
-
-@when('I register a center')
-def step_impl(context):
-    #fill the form
-    for row in context.table:
-        context.browser.visit(context.get_url('/administracion/crear_centro/'))
-        form = context.browser.find_by_tag('form').first
-        for heading in row.headings:
-            context.browser.fill(heading, row[heading])
-    form.find_by_value('Crear').first.click()
-    #assert that the center was created correctly
-
-@step('I\'m viewing the details of this center')
-def step_impl(context):
-    context.browser.visit(context.get_url('/centros/'))
-    table = context.table
-    context.browser.links.find_by_text(table[0][0]).click()
-    assert context.browser.is_text_present('Nombre: ' + table[0][0])
-    assert context.browser.is_text_present('Direccion: ' + table[0][1])
-
-@when('I register a "{animal}"')
-def step_impl(context, animal):
-    #create a centro for this animal
-    from principal.models import Centro
-    centro = Centro.objects.create(nombre=context.table[0][5], direccion="direccion")
-    centro.save()
-    #fill the form
-    for row in context.table:
-        uri = "/administracion/crear_" + animal + "/"
-        context.browser.visit(context.get_url(uri))
-        if not context.browser.is_text_present("Para acceder a esta seccion necesitas iniciar sesion con tu cuenta de trabajdor del centro"):
-            form = context.browser.find_by_tag('form').first
-            for heading in row.headings:
-                if (heading != "centro"):
-                    context.browser.fill(heading, row[heading])
-                else:
-                    context.browser.find_by_name('centro').select(str(centro.pk))
-
-            form.find_by_value('Crear').first.click()
 
 
 @when('I click on the "Administracion" button')
