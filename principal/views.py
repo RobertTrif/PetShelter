@@ -10,10 +10,10 @@ from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.admin.views.decorators import user_passes_test
-    
+  
 #html request
 def api(request):
-    return render(request, "/APi-pages/basic-search-dog.html")
+    return render(request, "APi-pages/pagination-cat.html")
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
