@@ -49,4 +49,11 @@ urlpatterns = [
     path('edit_password/', wv.updatePassword, name='edit_password'),
     path('administracion/centro_creado/<int:pk>', DetailView.as_view(model= model.Centro, template_name='centro_creado.html'), name='Centro_creado'),
     path('api/', wv.api, name='API'),
+
+    # Elliminacion de animales 
+    path('administracion/eliminar_animal/<str:animal_type>/', wv.eliminar, name='eliminar'),
+    path('administracion/<int:pk>', DetailView.as_view(model= model.Animal, template_name='animal_creado.html'), name='Animal_creado'),
+    path('administracion/eliminar_animal/<str:animal_type>/<int:animal_id>/', wv.eliminar_confirmar, name='eliminar_confirmar'),
+    path('pagina_no_encontrada/', wv.pagina_no_encontrada, name='pagina_no_encontrada'),
+    path('administracion/centro_creado/<int:pk>', DetailView.as_view(model= model.Centro, template_name='centro_creado.html'), name='Centro_creado'),
 ]

@@ -5,7 +5,6 @@
     <form name="link">
         <label>Nuevo animal:</label>
         <select name="menu">  
-            
             <option value={% url 'New_perro' %}>Perro</option> 
             <option value={% url 'New_gato' %}>Gato</option> 
             <option value={% url 'New_otro' %}>Otro</option> 
@@ -14,6 +13,18 @@
     </form>
     </li>
     <li><a href={% url 'New_centro' %}>Nuevo centro</a></li>
+    <li>
+        <label>Eliminar:</label>
+        <form name="eliminar_animal">
+            <select name="menu">  
+                <option value="Perro">Perro</option> 
+                <option value="Gato">Gato</option> 
+                <option value="Centro">Centro</option> 
+                <option value="Otro">Otro</option> 
+            </select> 
+            <input type="button" onClick="location='/administracion/eliminar_animal/' + document.eliminar_animal.menu.value + '/';" value="Eliminar">
+        </form>
+    </li>
 </ul>
 {% else %}
     <h4>Para acceder a esta seccion necesitas iniciar sesion con tu cuenta de trabajdor del centro </h4>

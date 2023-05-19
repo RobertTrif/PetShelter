@@ -9,6 +9,7 @@ from django.contrib.auth.views import LoginView
 from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.admin.views.decorators import user_passes_test
     
 #html request
 def api(request):
@@ -260,3 +261,48 @@ def updatePassword(request):
     context = {'form': form}
     return render(request, 'edit_centro.html', context)
     
+def is_trabajador(user):
+    return user.is_authenticated and user.is_trabajador
+
+login_required_trabajador = user_passes_test(is_trabajador)
+
+@login_required(login_url='pagina_no_encontrada')
+def eliminar(request, animal_type):
+    if animal_type == "Perro":
+        AnimalModel = Perro
+    elif animal_type == "Gato":
+        AnimalModel = Gato
+    elif animal_type == "Otro":
+        AnimalModel = Otro
+    elif animal_type == "Centro":
+        AnimalModel = Centro
+    else:
+        AnimalModel = Animal
+
+    animales = AnimalModel.objects.all()
+
+    context = {"animales": animales, "animal_type": animal_type}
+    return render(request, "eliminar.html", context)
+
+@login_required(login_url='/pagina_no_encontrada')
+def eliminar_confirmar(request, animal_type, animal_id):
+    if animal_type == "Perro":
+        AnimalModel = Perro
+    elif animal_type == "Gato":
+        AnimalModel = Gato
+    elif animal_type == "Otro":
+        AnimalModel = Otro
+    elif animal_type == "Centro":
+        AnimalModel = Centro    
+    else:
+        AnimalModel = Animal
+
+    animal = get_object_or_404(AnimalModel, pk=animal_id)
+    animal.delete()
+
+    messages.success(request, f"{animal.nombre} ha sido eliminado exitosamente.")
+    return redirect("eliminar", animal_type=animal_type)
+
+
+def pagina_no_encontrada(request):
+    return render(request, 'pagina_no_encontrada.html')
