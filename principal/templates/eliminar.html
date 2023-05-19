@@ -4,8 +4,8 @@
     <ul>
         {% for animal in animales %}
         <li>
-            <a href={% url 'Animal' animal.id %}>{{ animal.nombre }}</a>
             <form method="POST" action="{% url 'eliminar_confirmar' animal_type=animal_type animal_id=animal.id %}">
+                <a href={% url 'Animal' animal.id %}>{{ animal.nombre }}</a>
                 {% csrf_token %}
                 <button type="submit">Eliminar</button>
             </form>
