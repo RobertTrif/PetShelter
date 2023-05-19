@@ -37,15 +37,6 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 
-@step('I\'m viewing the details of this center')
-def step_impl(context):
-    context.browser.visit(context.get_url('/centros/'))
-    table = context.table
-    context.browser.links.find_by_text(table[0][0]).click()
-    assert context.browser.is_text_present('Nombre: ' + table[0][0])
-    assert context.browser.is_text_present('Direccion: ' + table[0][1])
-
-
 @when('I click on the "Administracion" button')
 def step_when_click_administracion_button(context):
     administracion_link = context.browser.find_by_xpath('//a[text()="Administracion"]').first
