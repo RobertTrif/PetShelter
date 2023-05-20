@@ -10,7 +10,71 @@ from .models import *
 from .forms import *
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.admin.views.decorators import user_passes_test
-  
+import requests
+import json
+import json
+from urllib.request import urlopen
+
+import json
+import requests
+
+import requests
+
+def animal_details(request, animal_id):
+    animal = Animal.objects.get(pk=animal_id)
+    if Perro.objects.filter(pk=animal_id).exists():
+        tipo = Perro.objects.get(pk=animal_id)
+    elif Gato.objects.filter(pk=animal_id).exists():
+        tipo = Gato.objects.get(pk=animal_id)
+    elif Otro.objects.filter(pk=animal_id).exists():
+        tipo = Otro.objects.get(pk=animal_id)
+
+    if Gato.objects.filter(pk=animal_id).exists():
+        breed_name = tipo.raza  # Assuming "raza" represents the breed name for a cat
+        breed_type = 'cat'
+    elif Perro.objects.filter(pk=animal_id).exists():
+        breed_name = tipo.raza  # Assuming "raza" represents the breed name for a dog
+        breed_type = 'dog'
+    else:
+        breed_name = None
+        breed_type = None
+
+    breed_info = {}
+    image_url = None  # Initialize the image URL variable
+
+    if breed_name:
+        breed_search_url = f'https://api.thedogapi.com/v1/breeds/search?q={breed_name}&limit=1&api_key=live_zzGlFfnyqVgP7Lz69AOcfObQvaUcbJdTEB6j5uZ8kfPK5eGyJyvEjHUxHBBZwjyv'
+        response = requests.get(breed_search_url)
+        if response.status_code == 200:
+            breed_info_list = response.json()
+            if breed_info_list:
+                breed_info = breed_info_list[0]
+                image_url = get_image_url(breed_info['reference_image_id'])  # Obtain the image URL
+
+    context = {
+        'animal': animal,
+        'breed_info_json': breed_info,
+        'tipo': tipo,
+        'image_url': image_url,  # Add the image URL to the context
+    }
+
+    return render(request, "animal_details.html", context)
+
+
+def get_image_url(image_id):
+    image_url = ''
+    image_info_url = f'https://api.thedogapi.com/v1/images/{image_id}'
+    response = requests.get(image_info_url)
+    if response.status_code == 200:
+        image_info = response.json()
+        if image_info and 'url' in image_info:
+            image_url = image_info['url']
+    print("Image URL:", image_url)       
+    return image_url
+
+
+
+
 #html request
 def api(request):
     return render(request, "APi-pages/pagination-cat.html")

@@ -1,0 +1,40 @@
+{% include 'base.html' %}
+{% block content %}
+    <p>
+        <strong>Nombre:</strong> {{ animal.nombre }} <br>
+        <strong>Peso (Kg):</strong> {{ animal.peso }} <br>
+        <strong>Color:</strong> {{ animal.color }} <br>
+        <strong>Raza:</strong> {{ tipo.raza }} <br>
+        <strong>Pelaje:</strong> {{ tipo.pelaje }} <br>
+        <strong>Centro:</strong> <a href="{% url 'Centro' tipo.centro.id %}">{{ tipo.centro.nombre }}</a>
+        <br>
+        {% if user.is_trabajador %}
+            <a href="{% url 'edit_animal' animal.id %}">Editar animal</a>
+        {% endif %}
+    </p>
+    <div id="additional-info">
+        {% if breed_info_json %}
+        <p>
+            {% if breed_description %}
+            <strong>Additional Info:</strong> <span id="breed-description">{{ breed_info_json.description|default:"No additional information available." }}</span>
+            {% endif %}
+        </p>
+        <p>
+            <strong>Weight (Imperial):</strong> {{ breed_info_json.weight.imperial }} <br>
+            <strong>Weight (Metric):</strong> {{ breed_info_json.weight.metric }} <br>
+            <strong>Height (Imperial):</strong> {{ breed_info_json.height.imperial }} <br>
+            <strong>Height (Metric):</strong> {{ breed_info_json.height.metric }} <br>
+            <strong>Bred For:</strong> {{ breed_info_json.bred_for }} <br>
+            <strong>Breed Group:</strong> {{ breed_info_json.breed_group }} <br>
+            <strong>Life Span:</strong> {{ breed_info_json.life_span }} <br>
+            <strong>Temperament:</strong> {{ breed_info_json.temperament }} <br>
+            <strong>Reference Image ID:</strong> {{ breed_info_json.reference_image_id }} <br>
+        </p>
+        <p>
+            <strong>Breed Image:</strong><br>
+            <img src="{{ image_url }}" alt="{{ tipo.raza }} Image">
+        </p>        
+        {% endif %}
+    </div>
+    
+{% endblock %}

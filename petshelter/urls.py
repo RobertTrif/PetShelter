@@ -27,7 +27,7 @@ import principal.models as model
 urlpatterns = [
     path('admin/', admin.site.urls),
     path ('', wv.index, name='Index'),
-    path ('animal/<int:animal_id>', wv.animal, name='Animal'),
+    path ('animal/<int:animal_id>', wv.animal_details, name='Animal'),
     path ('animales/<str:animal_type>', wv.animales, name='Animales'),
     path ('lista_animales/', wv.lista_animales, name='Lista_animales'),
     path ('centros/', wv.centros, name='Centros'),
