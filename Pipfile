@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 behave = "*"
 splinter = "*"
 behave-django = "*"
+requests = "*"
 
 [dev-packages]
 

@@ -12,13 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.admin.views.decorators import user_passes_test
 import requests
 import json
-import json
 from urllib.request import urlopen
-
-import json
-import requests
-
-import requests
 
 def animal_details(request, animal_id):
     animal = Animal.objects.get(pk=animal_id)
