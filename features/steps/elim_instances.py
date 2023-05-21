@@ -2,7 +2,6 @@ from audioop import reverse
 from behave import *
 from selenium.webdriver.support.ui import Select
 use_step_matcher("parse")
-import time
 from splinter import Browser
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
