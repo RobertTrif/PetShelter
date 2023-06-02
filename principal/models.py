@@ -10,6 +10,9 @@ class WebUser(AbstractUser):
 class Centro(models.Model):
     nombre = models.CharField(max_length=256)
     direccion = models.CharField(max_length=256)
+    telefono = models.IntegerField()
+    correo = models.CharField(max_length=256)
+    cp = models.IntegerField() 
     
     def __str__(self):
         return str(self.nombre)

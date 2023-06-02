@@ -1,32 +1,33 @@
 {% include 'base.html' %}
-<h3>{% block title %} PetShelter - {{ centro.nombre }}{% endblock %}</h3>
+{% block title %} <h3> PetShelter - {{ centro.nombre }} </h3> {% endblock %}
 {% block content %}
     <div vocab="https://schema.org/" >
         <span typeof="AnimalShelter">
-                <span property="openingHours"><strong>Horario:</strong>
-                    <style>
-                        table, th, td {
-                          border:1px solid black;
-                        }
-                    </style>
-                    <table style="width:30%">
-                        {% for horario in horarios %}
-                            {% if horario.abierto %}
-                                <tr>
-                                    <td>{{horario.dia}}</td>
-                                    <td>{{horario.apertura}} a {{horario.cierre}}</td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
-                </span>
-            <span property="telephone"><strong>Telefono: </strong>6562125</span><br>
-            <span property="email"><strong>Correo: </strong> correo@correo.com</span><br>
+            <span property="name">{{ centro.name }}</span>
+            <span property="openingHours"><strong>Horario:</strong>
+                <style>
+                    table, th, td {
+                        border:1px solid black;
+                    }
+                </style>
+                <table style="width:30%">
+                    {% for horario in horarios %}
+                        {% if horario.abierto %}
+                            <tr>
+                                <td>{{horario.dia}}</td>
+                                <td>{{horario.apertura}} a {{horario.cierre}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </span>
+            <span property="telephone"><strong>Telefono: </strong>{{centro.telefono}}</span><br>
+            <span property="email"><strong>Correo: </strong> {{centro.correo}}</span><br>
             <span typeof="PostalAddress" property="address"><span property="streetAddress">
                 <strong>Direccion: </strong> {{ centro.direccion }}
             </span></span><br>
             <span typeof="PostalAddress" property="address"><span property="postalCode">
-                <strong>Codigo postal: </strong> CP
+                <strong>Codigo postal: </strong> {{centro.cp}}
             </span></span><br>
             <span property="priceRange"><strong>Donativos: </strong> dame dinero</span><br>
         </span>
