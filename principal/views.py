@@ -113,7 +113,8 @@ def centros(request):
 
 def centro(request, centro_id):
     centro = Centro.objects.get(pk=centro_id)
-    return render(request, "centro.html", {'centro':centro} )
+    horarios = Horario.objects.filter(centro=centro).order_by('dia_semana').values()
+    return render(request, "centro.html", {'centro':centro, 'horarios':horarios} )
 
 @login_required(login_url='login')
 def administracion(request):

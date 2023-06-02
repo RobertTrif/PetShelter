@@ -10,12 +10,20 @@ class WebUser(AbstractUser):
 class Centro(models.Model):
     nombre = models.CharField(max_length=256)
     direccion = models.CharField(max_length=256)
-
+    
     def __str__(self):
         return str(self.nombre)
     
     def get_absolute_url(self):
         return reverse('Centro_creado', kwargs={'pk':self.pk})
+
+class Horario(models.Model):
+    centro = models.ForeignKey(Centro, on_delete=models.CASCADE)
+    dia_semana = models.DecimalField(max_digits=1, decimal_places=0, blank=False,null=False)
+    dia = models.CharField(max_length=20)
+    abierto = models.BooleanField(default=False)
+    apertura = models.TimeField(auto_now=False, auto_now_add=False)
+    cierre = models.TimeField(auto_now=False, auto_now_add=False)
 
 class Trabajador(models.Model):
     User = models.OneToOneField(WebUser, on_delete=models.CASCADE, primary_key=True)

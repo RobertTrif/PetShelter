@@ -1,9 +1,35 @@
 {% include 'base.html' %}
+<h3>{% block title %} PetShelter - {{ centro.nombre }}{% endblock %}</h3>
 {% block content %}
-    <p>
-        <strong>Nombre:</strong> {{centro.nombre}} <br>
-        <strong>Direccion:</strong> {{centro.direccion}}
-        <br>
-        {% if user.is_trabajador %}<a href="{% url 'edit_centro' centro.id %}">Editar centro</a>{% endif %}
-    </p>
+    <div vocab="https://schema.org/" >
+        <span typeof="AnimalShelter">
+                <span property="openingHours"><strong>Horario:</strong>
+                    <style>
+                        table, th, td {
+                          border:1px solid black;
+                        }
+                    </style>
+                    <table style="width:30%">
+                        {% for horario in horarios %}
+                            {% if horario.abierto %}
+                                <tr>
+                                    <td>{{horario.dia}}</td>
+                                    <td>{{horario.apertura}} a {{horario.cierre}}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </span>
+            <span property="telephone"><strong>Telefono: </strong>6562125</span><br>
+            <span property="email"><strong>Correo: </strong> correo@correo.com</span><br>
+            <span typeof="PostalAddress" property="address"><span property="streetAddress">
+                <strong>Direccion: </strong> {{ centro.direccion }}
+            </span></span><br>
+            <span typeof="PostalAddress" property="address"><span property="postalCode">
+                <strong>Codigo postal: </strong> CP
+            </span></span><br>
+            <span property="priceRange"><strong>Donativos: </strong> dame dinero</span><br>
+        </span>
+    </div>
+    {% if user.is_trabajador %}<a href="{% url 'edit_centro' centro.id %}">Editar centro</a>{% endif %}
 {% endblock %}
