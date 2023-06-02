@@ -12,7 +12,8 @@ class Centro(models.Model):
     direccion = models.CharField(max_length=256)
     telefono = models.IntegerField()
     correo = models.CharField(max_length=256)
-    cp = models.IntegerField() 
+    cp = models.IntegerField()
+    donativo = models.IntegerField()
     
     def __str__(self):
         return str(self.nombre)

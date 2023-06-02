@@ -29,7 +29,8 @@
             <span typeof="PostalAddress" property="address"><span property="postalCode">
                 <strong>Codigo postal: </strong> {{centro.cp}}
             </span></span><br>
-            <span property="priceRange"><strong>Donativos: </strong> dame dinero</span><br>
+            <span property="priceRange"><strong>Donativos: </strong> {{centro.donativo}}</span>
+            <button clas="btn donativo">Donar </button><br>
         </span>
     </div>
     {% if user.is_trabajador %}<a href="{% url 'edit_centro' centro.id %}">Editar centro</a>{% endif %}
